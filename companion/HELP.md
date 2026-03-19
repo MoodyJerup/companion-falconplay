@@ -1,10 +1,43 @@
-# Falcon Play module
+# Falcon Play Server – Companion Module
 
-This module controls Falcon Play over its HTTP API.
+This module controls **Falcon Play Server** via its REST API.
 
-Configure:
-- Host: IP of Falcon Play
-- Port: 80 (or your HTTP port)
+## Configuration
 
-Actions:
-- Play video via /api/media/play
+- **Host:** IP address of the Falcon Play Server (default: `127.0.0.1`)
+- **Port:** HTTP port (default: `80`)
+
+## Actions
+
+| Action | Description |
+|---|---|
+| **Switch Input (Camera)** | Switch a vision mixer input to Program with transition style (cut/mix/dip/wipe/sting) |
+| **Run Function** | Execute a Falcon Play automation function/macro |
+| **Play Graphic Scene** | Play a saved CasparCG graphic scene |
+| **Play Video** | Play a video file on a CasparCG server channel/layer |
+| **Load Video (Preview)** | Cue a video in preview without playing |
+| **Stop Video** | Stop a video on a server/layer |
+| **Clear Video** | Clear (remove) a video from a server/layer |
+| **Take Next** | Advance the rundown – take the cued item on-air |
+
+## Feedbacks
+
+| Feedback | Description |
+|---|---|
+| **Server Connected** | True when the Falcon Play server is reachable |
+| **Device Connected** | True when a specific device (Vision Mixer, Media Player, Sound Mixer, Video Hub) is connected |
+| **Input On Air** | True when a specific input is currently on-air |
+
+## Variables
+
+| Variable | Description |
+|---|---|
+| `server_version` | Falcon Play server version |
+| `rundown_name` | Active rundown name |
+| `onair_item` | Currently on-air item |
+| `cued_item` | Currently cued item |
+| `vision_mixer_connected` | Vision Mixer connection status |
+| `media_player_connected` | Media Player connection status |
+| `sound_mixer_connected` | Sound Mixer connection status |
+| `video_hub_connected` | Video Hub connection status |
+| `file_server_online` | File Server online status |

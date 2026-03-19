@@ -1,16 +1,15 @@
 {
-	"id": "your-module-name",
-	"name": "your-module-name",
-	"shortname": "module-shortname",
-	"description": "A short one line description of your module",
-	"version": "0.0.0",
+	"id": "falcon-play",
+	"name": "Falcon Play Server",
+	"shortname": "FalconPlay",
+	"description": "Control Falcon Play Server via its REST API",
+	"version": "1.0.0",
 	"license": "MIT",
-	"repository": "git+https://github.com/bitfocus/companion-module-your-module-name.git",
-	"bugs": "https://github.com/bitfocus/companion-module-your-module-name/issues",
+	"repository": "git+https://github.com/MoodyJerup/companion-falconplay.git",
+	"bugs": "https://github.com/MoodyJerup/companion-falconplay/issues",
 	"maintainers": [
 		{
-			"name": "Your name",
-			"email": "Your email"
+			"name": "MoodyJerup"
 		}
 	],
 	"runtime": {
@@ -20,7 +19,7 @@
 		"entrypoint": "../main.js"
 	},
 	"legacyIds": [],
-	"manufacturer": "Your company2",
-	"products": ["Your product"],
-	"keywords": []
+	"manufacturer": "Falcon Play",
+	"products": ["Falcon Play Server"],
+	"keywords": ["falcon", "play", "casparcg", "playout", "vision mixer", "graphics"]
 }
