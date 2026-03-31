@@ -291,6 +291,78 @@ module.exports = (self) => {
 			},
 		},
 
+		// --- Stop Graphic ---
+		stopGraphic: {
+			name: 'Stop Graphic',
+			description: 'Stop (take off) a graphic on a graphic engine channel/layer',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'graphicChannel',
+					label: 'Graphic Engine',
+					choices: serverChoices,
+					default: 'A',
+				},
+				{
+					type: 'number',
+					id: 'graphicLayer',
+					label: 'Layer',
+					default: 1,
+					min: 1,
+					max: 100,
+				},
+			],
+			callback: async (action) => {
+				try {
+					const result = await self.httpPost('/api/scene/stop', {
+						graphicChannel: action.options.graphicChannel,
+						graphicLayer: action.options.graphicLayer,
+					})
+					if (!result.ok) {
+						self.log('error', `Stop Graphic failed: ${result.error}`)
+					}
+				} catch (err) {
+					self.log('error', `Stop Graphic error: ${err.message}`)
+				}
+			},
+		},
+
+		// --- Clear Graphic ---
+		clearGraphic: {
+			name: 'Clear Graphic',
+			description: 'Clear (remove completely) a graphic from a graphic engine channel/layer',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'graphicChannel',
+					label: 'Graphic Engine',
+					choices: serverChoices,
+					default: 'A',
+				},
+				{
+					type: 'number',
+					id: 'graphicLayer',
+					label: 'Layer',
+					default: 1,
+					min: 1,
+					max: 100,
+				},
+			],
+			callback: async (action) => {
+				try {
+					const result = await self.httpPost('/api/scene/clear', {
+						graphicChannel: action.options.graphicChannel,
+						graphicLayer: action.options.graphicLayer,
+					})
+					if (!result.ok) {
+						self.log('error', `Clear Graphic failed: ${result.error}`)
+					}
+				} catch (err) {
+					self.log('error', `Clear Graphic error: ${err.message}`)
+				}
+			},
+		},
+
 		// --- Take Next (Rundown) ---
 		takeNext: {
 			name: 'Take Next',
