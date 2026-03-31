@@ -1,5 +1,4 @@
 const { InstanceBase, Regex, runEntrypoint, InstanceStatus } = require('@companion-module/base')
-const http = require('http')
 const UpgradeScripts = require('./upgrades')
 const UpdateActions = require('./actions')
 const UpdateFeedbacks = require('./feedbacks')
@@ -70,53 +69,19 @@ class ModuleInstance extends InstanceBase {
 		return `http://${host}:${port}`
 	}
 
-	httpGet(path) {
-		return new Promise((resolve, reject) => {
-			const url = `${this.getBaseUrl()}${path}`
-			http.get(url, { timeout: 5000 }, (res) => {
-				let data = ''
-				res.on('data', (chunk) => (data += chunk))
-				res.on('end', () => {
-					try {
-						resolve(JSON.parse(data))
-					} catch {
-						reject(new Error('Invalid JSON response'))
-					}
-				})
-			}).on('error', (err) => reject(err))
-		})
+	async httpGet(path) {
+		const res = await fetch(`${this.getBaseUrl()}${path}`, { signal: AbortSignal.timeout(5000) })
+		return res.json()
 	}
 
-	httpPost(path, body) {
-		return new Promise((resolve, reject) => {
-			const url = new URL(`${this.getBaseUrl()}${path}`)
-			const payload = JSON.stringify(body)
-			const options = {
-				hostname: url.hostname,
-				port: url.port,
-				path: url.pathname,
-				method: 'POST',
-				timeout: 5000,
-				headers: {
-					'Content-Type': 'application/json',
-					'Content-Length': Buffer.byteLength(payload),
-				},
-			}
-			const req = http.request(options, (res) => {
-				let data = ''
-				res.on('data', (chunk) => (data += chunk))
-				res.on('end', () => {
-					try {
-						resolve(JSON.parse(data))
-					} catch {
-						reject(new Error('Invalid JSON response'))
-					}
-				})
-			})
-			req.on('error', (err) => reject(err))
-			req.write(payload)
-			req.end()
+	async httpPost(path, body) {
+		const res = await fetch(`${this.getBaseUrl()}${path}`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(body),
+			signal: AbortSignal.timeout(5000),
 		})
+		return res.json()
 	}
 
 	// --- Polling ---
