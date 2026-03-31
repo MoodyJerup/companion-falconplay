@@ -1,6 +1,6 @@
 {
 	"id": "falcon-play",
-	"name": "Falcon Play Server",
+	"name": "falcon-play",
 	"shortname": "FalconPlay",
 	"description": "Control Falcon Play Server via its REST API",
 	"version": "1.0.0",
@@ -9,14 +9,15 @@
 	"bugs": "https://github.com/MoodyJerup/companion-falconplay/issues",
 	"maintainers": [
 		{
-			"name": "MoodyJerup"
+			"name": "MoodyJerup",
+			"email": "moodyjerup@users.noreply.github.com"
 		}
 	],
 	"runtime": {
 		"type": "node22",
 		"api": "nodejs-ipc",
 		"apiVersion": "0.0.0",
-		"entrypoint": "../main.js"
+		"entrypoint": "../src/main.js"
 	},
 	"legacyIds": [],
 	"manufacturer": "Falcon Play",
