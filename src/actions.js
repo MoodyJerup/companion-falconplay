@@ -23,6 +23,11 @@ module.exports = (self) => {
 		{ id: 'D', label: 'Server D' },
 	]
 
+	const graphicChannelChoices = Array.from({ length: 26 }, (_, i) => {
+		const letter = String.fromCharCode(65 + i)
+		return { id: letter, label: `Graphic ${letter}` }
+	})
+
 	self.setActionDefinitions({
 		// --- Switch Input / Camera ---
 		switchInput: {
@@ -300,7 +305,7 @@ module.exports = (self) => {
 					type: 'dropdown',
 					id: 'graphicChannel',
 					label: 'Graphic Engine',
-					choices: serverChoices,
+					choices: graphicChannelChoices,
 					default: 'A',
 				},
 				{
@@ -336,7 +341,7 @@ module.exports = (self) => {
 					type: 'dropdown',
 					id: 'graphicChannel',
 					label: 'Graphic Engine',
-					choices: serverChoices,
+					choices: graphicChannelChoices,
 					default: 'A',
 				},
 				{
@@ -359,6 +364,62 @@ module.exports = (self) => {
 					}
 				} catch (err) {
 					self.log('error', `Clear Graphic error: ${err.message}`)
+				}
+			},
+		},
+
+		// --- Stop All Graphic Layers ---
+		stopGraphicAll: {
+			name: 'Stop All Graphic Layers',
+			description: 'Stop (take off) all layers on a graphic engine channel',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'graphicChannel',
+					label: 'Graphic Engine',
+					choices: graphicChannelChoices,
+					default: 'A',
+				},
+			],
+			callback: async (action) => {
+				try {
+					const result = await self.httpPost('/api/scene/stop', {
+						graphicChannel: action.options.graphicChannel,
+						graphicLayer: -1,
+					})
+					if (!result.ok) {
+						self.log('error', `Stop All Graphic Layers failed: ${result.error}`)
+					}
+				} catch (err) {
+					self.log('error', `Stop All Graphic Layers error: ${err.message}`)
+				}
+			},
+		},
+
+		// --- Clear All Graphic Layers ---
+		clearGraphicAll: {
+			name: 'Clear All Graphic Layers',
+			description: 'Clear all layers on a graphic engine channel',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'graphicChannel',
+					label: 'Graphic Engine',
+					choices: graphicChannelChoices,
+					default: 'A',
+				},
+			],
+			callback: async (action) => {
+				try {
+					const result = await self.httpPost('/api/scene/clear', {
+						graphicChannel: action.options.graphicChannel,
+						graphicLayer: -1,
+					})
+					if (!result.ok) {
+						self.log('error', `Clear All Graphic Layers failed: ${result.error}`)
+					}
+				} catch (err) {
+					self.log('error', `Clear All Graphic Layers error: ${err.message}`)
 				}
 			},
 		},
